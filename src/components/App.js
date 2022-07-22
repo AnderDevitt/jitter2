@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useReducer, useState } from 'react'
 import Navigation from './Navigation'
 import LoginForm from './LoginForm'
 import MessageForm from './MessageForm'
@@ -8,15 +8,35 @@ import initialMessageList from '../data/message-list.json'
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
 import About from './About'
 import NotFound from './NotFound'
+import { reducer } from '../utils/reducer'
 
 const App = () => {
-  const [loggedInUser, setLoggedInUser] = useState("")
-  const [messageList, setMessageList] = useState([])
+  // useReducer handles all states in the same object
+  const initialState = {
+    messageList: [],
+    loggedInUser: ""
+  }
+
+  // useReducer receives 2 arguments
+  // reducer -> is the function that is executed when ...
+  // state
+  // it returns an array with two elements
+  //store -> the name of the state
+  //dispatch -> is the function that triggers the reducer function
+  const [store, dispatch] = useReducer(reducer, initialState)
+  const {messageList, loggedInUser} = store
+
+  // const [loggedInUser, setLoggedInUser] = useState("")
+  // const [messageList, setMessageList] = useState([])
 
 
   // this function will pass to LoginForm and be used to update the state of the logged in user
   const activateUser = (username) => {
-    setLoggedInUser(username)
+    // setLoggedInUser(username)
+    dispatch({
+      type: "setLoggedInUser",
+      data: username
+    })
   }
 
   const addMessage = (text) => {
@@ -25,10 +45,14 @@ const App = () => {
       user: loggedInUser,
       id: messageList[0].id + 1 //nextId(messageList)
     }
-    setMessageList(
-      // this will put the last message at the top of the message list. reverse the elements in the [ ] to reverse the order
-      (messageList) => [message, ...messageList]
-    )
+    // setMessageList(
+    //   // this will put the last message at the top of the message list. reverse the elements in the [ ] to reverse the order
+    //   (messageList) => [message, ...messageList]
+    // )
+    dispatch({
+      type: "addMessage",
+      data: message
+    })
   }
 
   // function nextId(data) {
@@ -43,7 +67,11 @@ const App = () => {
   useEffect(
     ()=> {
       // fectch
-      setMessageList(initialMessageList)
+      // setMessageList(initialMessageList)
+      dispatch({
+        type: "setMessageList",
+        data: initialMessageList
+      })
     },
     []
   )
