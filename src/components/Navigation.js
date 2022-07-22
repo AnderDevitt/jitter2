@@ -1,27 +1,34 @@
+import { Link, useNavigate } from "react-router-dom"
+
 const Navigation = ({loggedInUser, activateUser}) => {
     
+    const navigate = useNavigate()
     // when logout is clicked this will prevent page rerender and wipe the active user
     const logout = (e) => {
         e.preventDefault()
         activateUser("")
+        navigate("/messages")
     }
 
     return (
         <nav>
-            <a href="/">Home</a>
-            <a href="/">About</a>
+            <Link to="/messages">Home</Link>
+            <Link to="/about">About</Link>
             { loggedInUser ?
                 <>
-                    {loggedInUser}
-                    <a href="/" onClick={logout}>Log out</a>
+                <Link to="/messages/new">New Message</Link>
+                {loggedInUser}
+                <Link to="/messages" onClick={logout}>Logout</Link>
                 </>
-                :
+                
+            :
                 <>
-                    Guest
-                    <a href="/">Login</a>
-                    <a href="/">Sign up</a>
+                Guest
+                <Link to="/login">Login</Link>
+                <Link to="/login">Signup</Link>
                 </>
-            } 
+            
+            }  
         </nav>
     )
 }
