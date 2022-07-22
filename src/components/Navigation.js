@@ -1,12 +1,18 @@
 import { Link, useNavigate } from "react-router-dom"
+import { useGlobalState }   from "../utils/stateContext"
 
-const Navigation = ({loggedInUser, activateUser}) => {
-    
+const Navigation = () => {
+    const {store, dispatch} = useGlobalState()
+    const {loggedInUser} = store
     const navigate = useNavigate()
+
     // when logout is clicked this will prevent page rerender and wipe the active user
     const logout = (e) => {
         e.preventDefault()
-        activateUser("")
+        dispatch({
+            type: "setLoggedInUser",
+            data: ""
+        })
         navigate("/messages")
     }
 
