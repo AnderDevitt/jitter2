@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 const Navigation = ({loggedInUser, activateUser}) => {
     
     // when logout is clicked this will prevent page rerender and wipe the active user
@@ -8,20 +10,13 @@ const Navigation = ({loggedInUser, activateUser}) => {
 
     return (
         <nav>
-            <a href="/">Home</a>
-            <a href="/">About</a>
-            { loggedInUser ?
-                <>
-                    {loggedInUser}
-                    <a href="/" onClick={logout}>Log out</a>
-                </>
-                :
-                <>
-                    Guest
-                    <a href="/">Login</a>
-                    <a href="/">Sign up</a>
-                </>
-            } 
+            <Link to="/messages">Home</Link>
+            <Link to="/about">About</Link>
+            <Link to="/messages/new">New Message</Link>
+            {loggedInUser}
+            <Link to="/messages" onClick={logout}>Logout</Link>
+            <Link to="/login">Login</Link>
+            <Link to="/login">Signup</Link>   
         </nav>
     )
 }
