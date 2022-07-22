@@ -1,6 +1,9 @@
 import { useState } from "react"
+import { useNavigate}   from "react-router-dom"
 
 const LoginForm = ({activateUser}) => {
+
+    const navigate = useNavigate()
     const initialFormData = {
         user: "",
         password: ""
@@ -17,6 +20,7 @@ const LoginForm = ({activateUser}) => {
         activateUser(formData.user)
         // clean the form
         setFormData(initialFormData)
+        navigate("/messages")
     }
 
     const handleFormData = (e) => {
