@@ -31,14 +31,14 @@ const App = () => {
     )
   }
 
-  function nextId(data) {
-    // exclude empty data
-    if(data.length === 0) return 1;
-    // find the next id if there are elements in data
-    const sortData = data.sort((a,b) => a.id - b.id)
-    const nextId = sortData[sortData.length - 1].id + 1
-    return nextId
-  }
+  // function nextId(data) {
+  //   // exclude empty data
+  //   if(data.length === 0) return 1;
+  //   // find the next id if there are elements in data
+  //   const sortData = data.sort((a,b) => a.id - b.id)
+  //   const nextId = sortData[sortData.length - 1].id + 1
+  //   return nextId
+  // }
 
   useEffect(
     ()=> {
